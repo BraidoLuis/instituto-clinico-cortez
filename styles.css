@@ -79,6 +79,23 @@ nav a:hover { text-decoration: underline; text-underline-offset: .3rem; }
 .strip-inner a + a { border-left: 1px solid var(--line); }
 .strip-inner a:hover strong { text-decoration: underline; text-underline-offset: .2em; }
 .strip-inner span { color: var(--muted); font-size: .9rem; }
+.strip-track { display: contents; }
+.strip-track > [aria-hidden="true"] { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .contact-strip:has(.strip-track) { overflow: hidden; }
+  .strip-track { display: flex; width: max-content; animation: contact-loop 20s linear infinite; }
+  .strip-track:has(:focus-visible) { display: contents; animation: none; }
+  .strip-track:not(:has(:focus-visible)) > .strip-inner {
+    display: flex; flex: none; width: max-content; min-width: 100vw; margin: 0;
+  }
+  .strip-track:not(:has(:focus-visible)) .strip-inner a:nth-child(n) {
+    flex: 1 0 auto; min-width: min(19rem, 80vw); padding: 1rem 1.6rem;
+    border: 0; border-inline-start: 1px solid var(--line);
+  }
+}
+@keyframes contact-loop {
+  to { transform: translateX(-50%); }
+}
 .section { padding-block: clamp(3.5rem, 8vw, 7rem); }
 .section-head { display: flex; gap: 1.5rem; align-items: end; justify-content: space-between; margin-bottom: 2rem; }
 .section-head > p { color: var(--muted); max-width: 32ch; padding-bottom: .25rem; }

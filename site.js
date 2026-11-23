@@ -17,15 +17,26 @@ document.addEventListener("keydown", (event) => {
     menu.focus();
   }
 });
-document.querySelector('a[href="#horarios"]').addEventListener("click", () => {
-  document.getElementById("horarios").open = true;
+const contactStrip = document.querySelector(".contact-strip");
+contactStrip.addEventListener("click", (event) => {
+  if (event.target.closest('a[href="#horarios"]')) {
+    document.getElementById("horarios").open = true;
+  }
 });
+const stripGroup = contactStrip.querySelector(".strip-inner");
+const stripTrack = document.createElement("div");
+const stripCopy = stripGroup.cloneNode(true);
+stripTrack.className = "strip-track";
+stripCopy.setAttribute("aria-hidden", "true");
+for (const link of stripCopy.querySelectorAll("a")) link.tabIndex = -1;
+stripGroup.replaceWith(stripTrack);
+stripTrack.append(stripGroup, stripCopy);
 
 const motionPreference = window.matchMedia("(prefers-reduced-motion: no-preference)");
 const progress = document.querySelector(".reading-progress");
 const parallax = Array.from(document.querySelectorAll(".about-image img, .service-card figure img"));
 const revealGroups = document.querySelectorAll(
-  ".section-head, .tech-grid, .contact-strip .strip-inner, .faq, .footer-links"
+  ".section-head, .tech-grid, .faq, .footer-links"
 );
 const revealItems = Array.from(document.querySelectorAll(
   ".card-copy, .about-copy, .about-image, .faq-section h2, .location > div, .location iframe, .footer-main .brand"
